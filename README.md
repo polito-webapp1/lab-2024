@@ -2,7 +2,7 @@
 
 Laboratories solutions (under development) for the course of _Web Applications I_ (in English) and _Applicazioni Web I_ (in Italian) for the Master Degree in Computer Engineering at Politecnico di Torino.
 
-- Lab 01: [Getting Started with Node.js](./lab01-node)
+- Lab 01: [Getting Started with Node.js](https://github.com/polito-webapp1/lab-2024/tree/main/lab01-node)
 - Lab 02: 
 - Lab 03: 
 - Lab 04: 
