@@ -1,0 +1,24 @@
+{
+  "name": "lab02-node-database",
+  "version": "1.0.0",
+  "description": "2024 - PoliTo - Web App I - Lab 2",
+  "main": "lab02-ex1.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polito-webapp1/lab-2024.git"
+  },
+  "keywords": [],
+  "author": "Luca Mannella, Luca Pezzolla, Juan Pablo Saenz Moreno",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/polito-webapp1/lab-2024/issues"
+  },
+  "homepage": "https://github.com/polito-webapp1/lab-2024",
+  "dependencies": {
+    "dayjs": "^1.11.10",
+    "sqlite3": "^5.1.7"
+  }
+}
