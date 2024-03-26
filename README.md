@@ -6,7 +6,7 @@ Laboratories solutions (under development) for the course of _Web Applications I
 
 - Lab 01: [Getting Started with Node.js](https://github.com/polito-webapp1/lab-2024/tree/main/lab01-node)
 - Lab 02: [Database Integration](https://github.com/polito-webapp1/lab-2024/tree/main/lab02-node-database)
-- Lab 03: 
+- Lab 03: [Express](https://github.com/polito-webapp1/lab-2024-private/tree/main/lab03-express)
 - Lab 04: 
 - Lab 05: 
 - Lab 06: 
