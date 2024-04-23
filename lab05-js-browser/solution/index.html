@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<!--
+  01UDFOV Applicazioni Web I / 01TXYOV Web Applications I
+  Lab 5 - 2024
+-->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Title: displayed in your browser's tab -->
+    <title>Film Library</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS for this document -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Including Bootstrap Javascript library -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Including Day.js library -->
+    <script defer src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script defer src="app.js"></script>
+</head>
+<body class="min-vh-100 d-flex flex-column">
+<header class="py-1 py-md-3 border-bottom bg-primary">
+    <div class="container-fluid gap-3 align-items-center">
+        <div class="row">
+            <div class="col-3 d-md-none">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#films-filters"
+                        aria-expanded="false" aria-controls="films-filters">
+                    <i class="bi bi-list"></i>
+                </button>
+
+            </div>
+            <div class="col-6 col-md-4">
+                <a href="/"
+                   class="d-flex align-items-center justify-content-center justify-content-md-start h-100 link-light text-decoration-none">
+                    <i class="bi bi-collection-play me-2 flex-shrink-0"></i>
+                    <span class="h5 mb-0">Film Library</span>
+                </a>
+            </div>
+            <div class="col-3 col-md-8 d-flex align-items-center justify-content-end">
+                <form class="d-none d-md-block w-100 me-3">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <a href="#" class="d-block link-light text-decoration-none">
+                    <i class="bi bi-person-circle"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="container-fluid flex-grow-1 d-flex flex-column">
+    <div class="row flex-grow-1">
+        <div id="films-filters" class="collapse col-md-3 bg-light">
+            <div class="py-4">
+            <h5 class="mb-3">Filters</h5>
+            <ul class="nav nav-pills flex-column gap-2 mb-auto">
+                <li class="nav-item"><a id="filter-all" href="#" class="nav-link active" aria-current="page">All</a></li>
+                <li class="nav-item"><a id="filter-favorites"  href="#favorites" class="nav-link link-dark">Favorites</a></li>
+                <li class="nav-item"><a id="filter-best" href="#best" class="nav-link link-dark">Best Rated</a></li>
+                <li class="nav-item"><a id="filter-seen-last-month" href="#lastSeen" class="nav-link link-dark">Seen Last Month</a></li>
+                <li class="nav-item"><a id="filter-unseen" href="#unseen" class="nav-link link-dark">Unseen</a></li>
+            </ul>
+            </div>
+        </div>
+        <div class="col-md-9 pt-3">
+            <h1><span id="filter-title">All</span> films</h1>
+            <ul id="films-list" class="list-group list-group-flush">
+            </ul>
+        </div>
+    </div>
+    <!-- Add a new film... -->
+    <button type="button" class="btn btn-primary rounded-circle fixed-right-bottom">
+        <i class="bi bi-plus"></i>
+    </button>
+</main>
+</body>
+</html>
