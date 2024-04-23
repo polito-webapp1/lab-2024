@@ -6,3 +6,7 @@ The files in this folder are structured as follows:
 - `index-not-responsive.html`: the HTML page designed to be rendered only on a desktop screen (Exercise 1).
 - `index.html`: the same HTML page designed in a responsive way (Exercise 2).
 - `style.css`: a CSS file used by both the previous two HTML files.
+
+The desired layout should be similar to the following picture:
+
+![This picture shows a possible layout for the applicaiton](./FilmLibrary.PNG)
