@@ -10,7 +10,7 @@ Laboratories solutions (under development) for the course of _Web Applications I
 - Lab 04: [Getting started with HTML and CSS](https://github.com/polito-webapp1/lab-2024/tree/main/lab04-html-css)
 - Lab 05: [JavaScript in the Browser](https://github.com/polito-webapp1/lab-2024/tree/main/lab05-js-browser)
 - Lab 06: [Getting started with React](https://github.com/polito-webapp1/lab-2024/tree/main/lab06-react)
-- Lab 07:
+- Lab 07: [React Forms](https://github.com/polito-webapp1/lab-2024/tree/main/lab07-forms)
 - Lab 08:
 - Lab 09:
 - Lab 10:
