@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 
 import {useState} from 'react';
 import {Button, Collapse, Col, Container, Row} from 'react-bootstrap/';
-import Filters from './components/Filters';
+import Filters from './components/Filters.jsx';
 import Header from "./components/Header.jsx";
 import FilmList from "./components/FilmList.jsx";
 import FilmForm from "./components/FilmForm.jsx";
