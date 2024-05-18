@@ -1,36 +1,23 @@
-/*
- * 01UDFOV Applicazioni Web I / 01TXYOV Web Applications I
- * Lab 6 - 2024
- */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
-import {INITIAL_FILMS, Film} from "./films.mjs";
-
+import { INITIAL_FILMS, Film } from "./films.mjs";
 import dayjs from 'dayjs';
-
-import {useState} from 'react';
-import {Button, Collapse, Col, Container, Row} from 'react-bootstrap/';
+import { useState } from 'react';
+import { Button, Collapse, Col, Container, Row } from 'react-bootstrap/';
 import Filters from './components/Filters.jsx';
 import Header from "./components/Header.jsx";
 import FilmList from "./components/FilmList.jsx";
 import FilmForm from "./components/FilmForm.jsx";
-import {  BrowserRouter as Router,  Routes,  Route} from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from "react-router-dom";
+import NotFoundPage from './components/NotFoundPage.jsx'; 
 
 
 function App() {
-    /**
-     * Defining a structure for Filters
-     * Each filter is identified by a unique name and is composed by the following fields:
-     * - A label to be shown in the GUI
-     * - An ID (equal to the unique name), used as key during the table generation
-     * - A filter function applied before passing the films to the FilmTable component
-     */
     const filters = {
-        'filter-all': {label: 'All', id: 'filter-all', filterFunction: () => true},
-        'filter-favorite': {label: 'Favorites', id: 'filter-favorite', filterFunction: film => film.favorite},
-        'filter-best': {label: 'Best Rated', id: 'filter-best', filterFunction: film => film.rating >= 5},
+        'filter-all': { label: 'All', id: 'filter-all', filterFunction: () => true },
+        'filter-favorite': { label: 'Favorites', id: 'filter-favorite', filterFunction: film => film.favorite },
+        'filter-best': { label: 'Best Rated', id: 'filter-best', filterFunction: film => film.rating >= 5 },
         'filter-lastmonth': {
             label: 'Seen Last Month',
             id: 'filter-lastmonth',
@@ -40,34 +27,28 @@ function App() {
                 return diff <= 0 && diff > -1;
             }
         },
-        'filter-unseen': {label: 'Unseen', id: 'filter-unseen', filterFunction: film => !film?.watchDate}
+        'filter-unseen': { label: 'Unseen', id: 'filter-unseen', filterFunction: film => !film?.watchDate }
     };
 
-    // This state contains the active filter
     const [activeFilter, setActiveFilter] = useState('filter-all');
+    const [filmList, setFilmList] = useState(INITIAL_FILMS);
+    const [visibleFilms, setVisibleFilms] = useState(filmList.filter(filters[activeFilter].filterFunction));
+    const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+    const [state, setState] = useState("View");
+    const [editingFilm, setEditingFilm] = useState(null);
+    const navigate = useNavigate();
 
     const handleSetFilter = (filter) => {
         setActiveFilter(filter);
-        setVisibleFilms(INITIAL_FILMS.filter(filters[filter].filterFunction));
-        //navigate(`/${filter}`);
+        setVisibleFilms(filmList.filter(filters[filter].filterFunction));
     }
-
-    // This is not optimal - better ways will be introduced in the upcoming labs
-    const [visibleFilms, setVisibleFilms] = useState(INITIAL_FILMS.filter(filters[activeFilter].filterFunction));
-
-    // This state controls the expansion of the sidebar (on small breakpoints only)
-    const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-
-    const [state, setState] = useState("View")
 
     const addFilm = (film) => {
         const newId = Math.max(...visibleFilms.map(film => film.id)) + 1;
         film.id = newId;
-        const newFilm=new Film(film.id, film.title, film.favorite, film.date, film.rating, 1)
+        const newFilm = new Film(film.id, film.title, film.favorite, film.date, film.rating, 1);
         setVisibleFilms([...visibleFilms, newFilm]);
     }
-
-    const [editingFilm, setEditingFilm] = useState(null)
 
     const handleEdit = (film) => {
         setEditingFilm(film)
@@ -76,25 +57,29 @@ function App() {
 
     const handleView = (state) => {
         setState(state);
-        if(state === "View") {
+        if (state === "View") {
             setEditingFilm(null)
         }
     }
 
     const editFilm = (film, id) => {
-        const index = visibleFilms.findIndex(f => f.id === id)
-        const newFilms = [...visibleFilms]
-        newFilms[index] = new Film (film.id, film.title, film.favorite, film.date, film.rating, 1)
-        setVisibleFilms(newFilms)
-        setEditingFilm(null)
+        const index = visibleFilms.findIndex(f => f.id === id);
+        const newFilms = [...visibleFilms];
+        newFilms[index] = new Film(film.id, film.title, film.favorite, film.date, film.rating, 1);
+        setVisibleFilms(newFilms);
+        setEditingFilm(null);
     }
 
-    const navigate = useNavigate();
+    const deleteFilm = (id) => {
+        const newFilms = visibleFilms.filter(film => film.id !== id);
+        setFilmList(newFilms);
+        setVisibleFilms(newFilms);
+    }
 
     return (
         <div className="min-vh-100 d-flex flex-column">
             <Header isSidebarExpanded={isSidebarExpanded} setIsSidebarExpanded={setIsSidebarExpanded}/>
-                <Container fluid className="flex-grow-1 d-flex flex-column">
+            <Container fluid className="flex-grow-1 d-flex flex-column">
                 <Routes>    
                     <Route path='/' element={
                         <>
@@ -107,8 +92,8 @@ function App() {
                                 </Collapse>
                                 <Col md={9} className="pt-3">
                                     <h1><span id="filter-title">{filters[activeFilter].label}</span> films</h1>
-                                   <FilmList films={visibleFilms} film= {editingFilm} editFilm={editFilm} addfilm={addFilm} handleEdit={handleEdit} filters={filters}/>        
-                                    </Col>
+                                    <FilmList films={visibleFilms} film={editingFilm} editFilm={editFilm} addfilm={addFilm} handleEdit={handleEdit} filters={filters} deleteFilm={deleteFilm}/>        
+                                </Col>
                             </Row>
                             <Button
                                 variant="primary"
@@ -118,7 +103,6 @@ function App() {
                                 <i className="bi bi-plus"></i>
                             </Button>
                         </>
-                        
                     } />
                     <Route path='/add' element={
                         <FilmForm mode="Add" addFilm={addFilm}/>
@@ -126,12 +110,11 @@ function App() {
                     <Route path='/edit/:id' element={
                         <FilmForm mode="Edit" film={editingFilm} editFilm={editFilm} handleEdit={handleEdit}/>
                     } />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
-
-                </Container>
-            {/* Main */}
-            
-        </div>);
+            </Container>
+        </div>
+    );
 }
 
 export default App;

@@ -17,7 +17,7 @@ function FilmList(props) {
     return (
         <ListGroup id="films-list" variant="flush">
             {props.films.map((film) => (
-                <FilmInList filmData={film} handleEdit={handleEdit} key={film.id} />
+                <FilmInList filmData={film} handleEdit={handleEdit} key={film.id} deleteFilm={props.deleteFilm} />
             ))}
         </ListGroup>
     );
@@ -27,7 +27,7 @@ FilmList.propTypes = {
     films: PropTypes.array.isRequired,
 };
 
-function FilmInList({ filmData, handleEdit }) {
+function FilmInList({ filmData, handleEdit, deleteFilm }) {
     return (
         <ListGroupItem>
             <Row className="gy-2">
@@ -35,7 +35,7 @@ function FilmInList({ filmData, handleEdit }) {
                     {filmData.title}
                     <div className="d-xl-none actions">
                         <i className="bi bi-pencil" onClick={() => handleEdit(filmData)}></i>
-                        <i className="bi bi-trash"></i>
+                        <i className="bi bi-trash" onClick={() => deleteFilm(filmData.id)}></i>
                     </div>
                 </Col>
                 <Col xs={6} xl={3} className="text-end text-xl-center">
@@ -53,7 +53,7 @@ function FilmInList({ filmData, handleEdit }) {
                     </div>
                     <div className="d-none d-xl-flex actions">
                         <i className="bi bi-pencil" onClick={() => handleEdit(filmData)}></i>
-                        <i className="bi bi-trash"></i>
+                        <i className="bi bi-trash" onClick={() => deleteFilm(filmData.id)}></i>
                     </div>
                 </Col>
             </Row>
