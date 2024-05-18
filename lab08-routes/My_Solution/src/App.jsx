@@ -49,16 +49,12 @@ function App() {
         setVisibleFilms([...visibleFilms, newFilm]);
     }
 
-    const handleEdit = (film) => {
-        setEditingFilm(film)
-    }
-
-
     const editFilm = (film, id) => {
         const index = visibleFilms.findIndex(f => f.id === id);
         const newFilms = [...visibleFilms];
         newFilms[index] = new Film(film.id, film.title, film.favorite, film.date, film.rating, 1);
         setVisibleFilms(newFilms);
+        setFilmList(newFilms);
         setEditingFilm(null);
     }
 
@@ -74,6 +70,7 @@ function App() {
         newFilms[index].favorite = favorite;
         setVisibleFilms(newFilms);
     }
+    
     const updateRating = (id, rating) => {
         const index = visibleFilms.findIndex(f => f.id === id);
         const newFilms = [...visibleFilms];
@@ -97,7 +94,7 @@ function App() {
                                 </Collapse>
                                 <Col md={9} className="pt-3">
                                     <h1><span id="filter-title">{filters[activeFilter].label}</span> films</h1>
-                                    <FilmList films={visibleFilms} handleEdit={handleEdit} deleteFilm={deleteFilm} setFavorite={setFavorite} updateRating={updateRating}/>        
+                                    <FilmList films={visibleFilms} handleEdit={setEditingFilm} deleteFilm={deleteFilm} setFavorite={setFavorite} updateRating={updateRating}/>        
                                 </Col>
                             </Row>
                             <Button
@@ -113,7 +110,7 @@ function App() {
                         <FilmForm mode="Add" addFilm={addFilm}/>
                     } />
                     <Route path='/edit/:id' element={
-                        <FilmForm mode="Edit" film={editingFilm} editFilm={editFilm} handleEdit={handleEdit}/>
+                        <FilmForm mode="Edit" film={editingFilm} editFilm={editFilm}/>
                     } />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
