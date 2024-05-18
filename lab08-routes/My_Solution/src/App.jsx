@@ -34,7 +34,6 @@ function App() {
     const [filmList, setFilmList] = useState(INITIAL_FILMS);
     const [visibleFilms, setVisibleFilms] = useState(filmList.filter(filters[activeFilter].filterFunction));
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-    const [state, setState] = useState("View");
     const [editingFilm, setEditingFilm] = useState(null);
     const navigate = useNavigate();
 
@@ -52,15 +51,8 @@ function App() {
 
     const handleEdit = (film) => {
         setEditingFilm(film)
-        setState("Edit")
     }
 
-    const handleView = (state) => {
-        setState(state);
-        if (state === "View") {
-            setEditingFilm(null)
-        }
-    }
 
     const editFilm = (film, id) => {
         const index = visibleFilms.findIndex(f => f.id === id);
@@ -73,6 +65,19 @@ function App() {
     const deleteFilm = (id) => {
         const newFilms = visibleFilms.filter(film => film.id !== id);
         setFilmList(newFilms);
+        setVisibleFilms(newFilms);
+    }
+
+    const setFavorite = (id, favorite) => {
+        const index = visibleFilms.findIndex(f => f.id === id);
+        const newFilms = [...visibleFilms];
+        newFilms[index].favorite = favorite;
+        setVisibleFilms(newFilms);
+    }
+    const updateRating = (id, rating) => {
+        const index = visibleFilms.findIndex(f => f.id === id);
+        const newFilms = [...visibleFilms];
+        newFilms[index].rating = rating;
         setVisibleFilms(newFilms);
     }
 
@@ -92,7 +97,7 @@ function App() {
                                 </Collapse>
                                 <Col md={9} className="pt-3">
                                     <h1><span id="filter-title">{filters[activeFilter].label}</span> films</h1>
-                                    <FilmList films={visibleFilms} film={editingFilm} editFilm={editFilm} addfilm={addFilm} handleEdit={handleEdit} filters={filters} deleteFilm={deleteFilm}/>        
+                                    <FilmList films={visibleFilms} handleEdit={handleEdit} deleteFilm={deleteFilm} setFavorite={setFavorite} updateRating={updateRating}/>        
                                 </Col>
                             </Row>
                             <Button

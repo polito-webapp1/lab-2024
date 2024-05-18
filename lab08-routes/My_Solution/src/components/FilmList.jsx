@@ -17,7 +17,7 @@ function FilmList(props) {
     return (
         <ListGroup id="films-list" variant="flush">
             {props.films.map((film) => (
-                <FilmInList filmData={film} handleEdit={handleEdit} key={film.id} deleteFilm={props.deleteFilm} />
+                <FilmInList filmData={film} handleEdit={handleEdit} key={film.id} deleteFilm={props.deleteFilm} setFavorite={props.setFavorite} updateRating={props.updateRating} />
             ))}
         </ListGroup>
     );
@@ -27,7 +27,7 @@ FilmList.propTypes = {
     films: PropTypes.array.isRequired,
 };
 
-function FilmInList({ filmData, handleEdit, deleteFilm }) {
+function FilmInList({ filmData, handleEdit, deleteFilm, setFavorite, updateRating }) {
     return (
         <ListGroupItem>
             <Row className="gy-2">
@@ -40,7 +40,7 @@ function FilmInList({ filmData, handleEdit, deleteFilm }) {
                 </Col>
                 <Col xs={6} xl={3} className="text-end text-xl-center">
                     <span className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" defaultChecked={filmData.favorite} />
+                        <input type="checkbox" className="custom-control-input" defaultChecked={filmData.favorite} onChange={(e) => setFavorite(filmData.id, e.target.checked)} />
                         <label className="custom-control-label">Favorite</label>
                     </span>
                 </Col>
@@ -49,7 +49,7 @@ function FilmInList({ filmData, handleEdit, deleteFilm }) {
                 </Col>
                 <Col xs={8} xl={3} className="actions-container text-end">
                     <div className="rating">
-                        <Rating rating={filmData.rating} maxStars={5} />
+                        <Rating rating={filmData.rating} maxStars={5} updateRating={updateRating} filmId={filmData.id} />
                     </div>
                     <div className="d-none d-xl-flex actions">
                         <i className="bi bi-pencil" onClick={() => handleEdit(filmData)}></i>
@@ -65,11 +65,15 @@ FilmInList.propTypes = {
     filmData: PropTypes.object.isRequired,
 };
 
-function Rating({ maxStars, rating }) {
-    if (rating === null) rating = 0;
+function Rating({ maxStars, rating, updateRating, filmId }) {
     return [...Array(maxStars)].map((el, index) => (
-        <i key={index} className={index < rating ? "bi bi-star-fill" : "bi bi-star"} />
-    ));
+        <i 
+            key={index} 
+            className={index < rating ? "bi bi-star-fill" : "bi bi-star"} 
+            onClick={() => updateRating(filmId, index + 1)} 
+            style={{ cursor: 'pointer' }} 
+        />
+        ));
 }
 
 Rating.propTypes = {
