@@ -1,17 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
-import { INITIAL_FILMS, Film } from "./films.mjs";
+import {Film, INITIAL_FILMS} from "./films.mjs";
 import dayjs from 'dayjs';
-import { useState } from 'react';
-import { Button, Collapse, Col, Container, Row } from 'react-bootstrap/';
-import Filters from './components/Filters.jsx';
+import {useState} from 'react';
+import {Container} from 'react-bootstrap/';
 import Header from "./components/Header.jsx";
-import FilmList from "./components/FilmList.jsx";
 import FilmForm from "./components/FilmForm.jsx";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import NotFoundPage from './components/NotFoundPage.jsx'; 
-
+import {Route, Routes} from "react-router-dom";
+import NotFoundPage from './components/NotFoundPage.jsx';
+import {FilmLibraryLayout, FilmListLayout} from "./components/PageLayout.jsx";
 
 function App() {
     const filters = {
@@ -34,19 +32,12 @@ function App() {
     const [filmList, setFilmList] = useState(INITIAL_FILMS);
     const [visibleFilms, setVisibleFilms] = useState(filmList.filter(filters[activeFilter].filterFunction));
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-    const [editingFilm, setEditingFilm] = useState(null);
-    const navigate = useNavigate();
-
-    const handleSetFilter = (filter) => {
-        setActiveFilter(filter);
-        setVisibleFilms(filmList.filter(filters[filter].filterFunction));
-    }
 
     const addFilm = (film) => {
-        const newId = Math.max(...visibleFilms.map(film => film.id)) + 1;
-        film.id = newId;
+        film.id = Math.max(...visibleFilms.map(film => film.id)) + 1;
         const newFilm = new Film(film.id, film.title, film.favorite, film.date, film.rating, 1);
         setVisibleFilms([...visibleFilms, newFilm]);
+        setFilmList([...filmList, newFilm]);
     }
 
     const editFilm = (film, id) => {
@@ -55,7 +46,6 @@ function App() {
         newFilms[index] = new Film(film.id, film.title, film.favorite, film.date, film.rating, 1);
         setVisibleFilms(newFilms);
         setFilmList(newFilms);
-        setEditingFilm(null);
     }
 
     const deleteFilm = (id) => {
@@ -70,7 +60,7 @@ function App() {
         newFilms[index].favorite = favorite;
         setVisibleFilms(newFilms);
     }
-    
+
     const updateRating = (id, rating) => {
         const index = visibleFilms.findIndex(f => f.id === id);
         const newFilms = [...visibleFilms];
@@ -80,39 +70,16 @@ function App() {
 
     return (
         <div className="min-vh-100 d-flex flex-column">
-            <Header isSidebarExpanded={isSidebarExpanded} setIsSidebarExpanded={setIsSidebarExpanded}/>
+            <Header isSidebarExpanded={isSidebarExpanded} setIsSidebarExpanded={setIsSidebarExpanded} />
             <Container fluid className="flex-grow-1 d-flex flex-column">
-                <Routes>    
-                    <Route path='/' element={
-                        <>
-                            <Row className="flex-grow-1">
-                                <Collapse id="films-filters" in={isSidebarExpanded} className="col-md-3 bg-light d-md-block">
-                                    <div className="py-4">
-                                        <h5 className="mb-3">Filters</h5>
-                                        <Filters items={filters} selected={activeFilter} onSelect={handleSetFilter}/>
-                                    </div>
-                                </Collapse>
-                                <Col md={9} className="pt-3">
-                                    <h1><span id="filter-title">{filters[activeFilter].label}</span> films</h1>
-                                    <FilmList films={visibleFilms} handleEdit={setEditingFilm} deleteFilm={deleteFilm} setFavorite={setFavorite} updateRating={updateRating}/>        
-                                </Col>
-                            </Row>
-                            <Button
-                                variant="primary"
-                                className="rounded-circle fixed-right-bottom"
-                                onClick={() => navigate("/add")}
-                            >
-                                <i className="bi bi-plus"></i>
-                            </Button>
-                        </>
-                    } />
-                    <Route path='/add' element={
-                        <FilmForm mode="Add" addFilm={addFilm}/>
-                    } />
-                    <Route path='/edit/:id' element={
-                        <FilmForm mode="Edit" film={editingFilm} editFilm={editFilm}/>
-                    } />
-                    <Route path="*" element={<NotFoundPage />} />
+                <Routes>
+                    <Route path="/" element={<FilmLibraryLayout films={filmList} isSidebarExpanded={isSidebarExpanded} filters={filters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}>
+                        <Route path="*" element={<NotFoundPage />} />
+                        <Route index element={<FilmListLayout films={filmList} filters={filters} updateFilm={editFilm} deleteFilm={deleteFilm} setFavorite={setFavorite} updateRating={updateRating} />} />
+                        <Route path="filters/:filterLabel" element={<FilmListLayout films={filmList} filters={filters} updateFilm={editFilm} deleteFilm={deleteFilm} setFavorite={setFavorite} updateRating={updateRating} />} />
+                    </Route>
+                    <Route path="add" element={<FilmForm mode="Add" addFilm={addFilm} />} />
+                    <Route path="edit/:filmId" element={<FilmForm mode="Edit" editFilm={editFilm} films={filmList} />} />
                 </Routes>
             </Container>
         </div>

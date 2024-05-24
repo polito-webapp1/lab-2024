@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import {NavItem, NavLink} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 /**
  * This components requires:
@@ -8,7 +9,9 @@ import {NavItem, NavLink} from "react-bootstrap";
  * - the handler to notify a new selection
  */
 function Filters(props) {
-    const {items, selected, onSelect} = props;
+    const {items, selected} = props;
+
+    const navigate = useNavigate();
 
     // Converting the object into an array to use map method
     const filterArray = Object.entries(items);
@@ -20,7 +23,10 @@ function Filters(props) {
                     return (
                         <NavItem key={filterName}>
                             <NavLink
-                                onClick={() => onSelect(filterName)}
+                                onClick={() => {
+                                    console.log('Filter clicked: ', filterName)
+                                    navigate("filters/"+ filterName)}
+                                }
                                 className={selected === filterName ? '': 'link-dark'}
                                 active={selected === filterName}
                             >

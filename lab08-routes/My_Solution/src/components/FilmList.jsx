@@ -3,21 +3,24 @@ import { Col, Row, ListGroup, ListGroupItem } from 'react-bootstrap/';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-function FilmList(props) {
-    //const params = useParams();
-    //const filter = params.filter;
-
-    const navigate = useNavigate(); // Ottieni la funzione navigate dall'hook useNavigate
+function FilmList({ films, deleteFilm, setFavorite, updateRating }) {
+    const navigate = useNavigate();
 
     const handleEdit = (film) => {
-        props.handleEdit(film);
         navigate(`/edit/${film.id}`);
     };
 
     return (
         <ListGroup id="films-list" variant="flush">
-            {props.films.map((film) => (
-                <FilmInList filmData={film} handleEdit={handleEdit} key={film.id} deleteFilm={props.deleteFilm} setFavorite={props.setFavorite} updateRating={props.updateRating} />
+            {films.map(film => (
+                <FilmInList
+                    filmData={film}
+                    handleEdit={handleEdit}
+                    key={film.id}
+                    deleteFilm={deleteFilm}
+                    setFavorite={setFavorite}
+                    updateRating={updateRating}
+                />
             ))}
         </ListGroup>
     );
@@ -25,6 +28,9 @@ function FilmList(props) {
 
 FilmList.propTypes = {
     films: PropTypes.array.isRequired,
+    deleteFilm: PropTypes.func.isRequired,
+    setFavorite: PropTypes.func.isRequired,
+    updateRating: PropTypes.func.isRequired
 };
 
 function FilmInList({ filmData, handleEdit, deleteFilm, setFavorite, updateRating }) {
@@ -63,22 +69,30 @@ function FilmInList({ filmData, handleEdit, deleteFilm, setFavorite, updateRatin
 
 FilmInList.propTypes = {
     filmData: PropTypes.object.isRequired,
+    handleEdit: PropTypes.func.isRequired,
+    deleteFilm: PropTypes.func.isRequired,
+    setFavorite: PropTypes.func.isRequired,
+    updateRating: PropTypes.func.isRequired
 };
 
 function Rating({ maxStars, rating, updateRating, filmId }) {
-    return [...Array(maxStars)].map((el, index) => (
-        <i 
-            key={index} 
-            className={index < rating ? "bi bi-star-fill" : "bi bi-star"} 
-            onClick={() => updateRating(filmId, index + 1)} 
-            style={{ cursor: 'pointer' }} 
-        />
-        ));
+    return (
+        [...Array(maxStars)].map((el, index) => (
+            <i
+                key={index}
+                className={index < rating ? "bi bi-star-fill" : "bi bi-star"}
+                onClick={() => updateRating(filmId, index + 1)}
+                style={{ cursor: 'pointer' }}
+            />
+        ))
+    );
 }
 
 Rating.propTypes = {
     maxStars: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
+    updateRating: PropTypes.func.isRequired,
+    filmId: PropTypes.number.isRequired
 };
 
 export default FilmList;
