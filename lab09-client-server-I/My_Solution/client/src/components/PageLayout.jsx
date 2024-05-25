@@ -12,7 +12,7 @@ export function FilmLibraryLayout(props) {
                 <div className="py-4">
                     <h5 className="mb-3">Filters</h5>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Filters items={props.filters} />
+                    <Filters items={props.filters} setActiveFilter={props.setActiveFilter} />
                 </div>
             </Collapse>
             <Col md={9} className="pt-3">
@@ -27,16 +27,13 @@ export function FilmListLayout(props) {
     // eslint-disable-next-line react/prop-types
     const filterName = props.filters[filterLabel] ? props.filters[filterLabel].label : 'All';
 
-    // eslint-disable-next-line react/prop-types
-    const filteredFilms = (filterLabel in props.filters) ? props.films.filter(props.filters[filterLabel].filterFunction) : props.films;
-
     const navigate = useNavigate();
 
     return (
         <>
             <Row><Col>  <h1><span id="filter-title">{filterName}</span> films</h1>  </Col></Row>
             {/* eslint-disable-next-line react/prop-types */}
-            <FilmList films={filteredFilms} deleteFilm={props.deleteFilm} handleEdit={props.updateFilm} setFavorite={props.setFavorite} updateRating={props.updateRating}/>
+            <FilmList films={props.films} deleteFilm={props.deleteFilm} handleEdit={props.updateFilm} setFavorite={props.setFavorite} updateRating={props.updateRating}/>
                 <Button
                     variant="primary"
                     className="rounded-circle fixed-right-bottom"
