@@ -1,0 +1,29 @@
+{
+  "name": "lab03-express",
+  "version": "1.0.0",
+  "description": "2024 - PoliTo - Web App I - Lab 3",
+  "author": "Luca Mannella, Luca Pezzolla, Juan Pablo Saenz Moreno",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polito-webapp1/lab-2024.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/polito-webapp1/lab-2024/issues"
+  },
+  "homepage": "https://github.com/polito-webapp1/lab-2024",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.10",
+    "express": "^4.19.1",
+    "express-validator": "^7.0.1",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.1.7"
+  }
+}
