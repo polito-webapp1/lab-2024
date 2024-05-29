@@ -13,5 +13,5 @@ Laboratories solutions (under development) for the course of _Web Applications I
 - Lab 07: [React Forms](https://github.com/polito-webapp1/lab-2024/tree/main/lab07-forms)
 - Lab 08: [Multiple Pages in React](https://github.com/polito-webapp1/lab-2024/tree/main/lab08-routes)
 - Lab 09: [API Integration (part 1)](https://github.com/polito-webapp1/lab-2024/tree/main/lab09-client-server-I)
-- Lab 10: [API Integration (part 2)](https://github.com/polito-webapp1/lab-2024/tree/main/lab09-client-server-II)
+- Lab 10: [API Integration (part 2)](https://github.com/polito-webapp1/lab-2024/tree/main/lab10-client-server-II)
 - Lab 11: Authentication
