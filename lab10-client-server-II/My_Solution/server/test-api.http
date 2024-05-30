@@ -65,7 +65,7 @@ content-type: application/json
 ###
 
 ## Updates film rating property.
-PUT http://localhost:3001/api/films/1/rating HTTP/1.1
+PUT http://localhost:3001/api/films/5/rating HTTP/1.1
 content-type: application/json
 
 {

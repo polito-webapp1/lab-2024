@@ -38,4 +38,4 @@ const INITIAL_FILMS = [
     new Film(5, "Shrek", false, "2024-04-20", 3)
 ];
 
-export {Film, INITIAL_FILMS};
+export default Film;

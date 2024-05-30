@@ -14,49 +14,20 @@ const FilmForm = ({ mode, films, addFilm, editFilm }) => {
     const [favorite, setFavorite] = useState(film ? film.favorite : false);
     const [date, setDate] = useState(film ? film.watchDate : '');
     const [rating, setRating] = useState(film ? film.rating : 1);
-    const [submit, setSubmit] = useState(false);
 
-    useEffect(() => {
-        const submitFilm = async () => {
-            const watchDate = date ? dayjs(date).format('YYYY-MM-DD') : null;
-            const newFilm = { id: filmId ? parseInt(filmId) : null, title, favorite, watchDate, rating, userId: 1 };
-
-            try {
-                if (mode === 'Add') {
-                    await API.newFilm(newFilm);
-                    addFilm(newFilm);
-                    console.log("Film added", newFilm);
-                } else {
-                    await API.editFilm(newFilm);
-                    editFilm(newFilm);
-                    console.log("Film edited", newFilm);
-                }
-                navigate('..');
-            } catch (error) {
-                console.error("Failed to submit the film", error);
-            }
-        };
-
-        if (submit) {
-            submitFilm();
-            setSubmit(false);
-        }
-    }, [submit]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setSubmit(true);
-    };
-
-    const handleDeleteFilm = (id) => {
-        try {
-            API.deleteFilm(id);
-            console.log("Film deleted", id);
-            navigate('..');
+        const watchDate = date ? dayjs(date).format('YYYY-MM-DD') : null;
+        const newFilm = { id: filmId ? parseInt(filmId) : null, title, favorite, watchDate, rating, userId: 1 };
+        if (mode === 'Add') {
+            addFilm(newFilm);
+            console.log("Film added", newFilm);
+        } else {
+            editFilm(newFilm);
+            console.log("Film edited", newFilm);
         }
-        catch (error) {
-            console.error("Failed to delete the film", error);
-        }
+        navigate('..');
     };
 
     return (
@@ -64,7 +35,7 @@ const FilmForm = ({ mode, films, addFilm, editFilm }) => {
             <Form onSubmit={handleSubmit}>
                 <FormGroupControl label="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 <FormGroupCheck label="Favorite" checked={favorite} onChange={(e) => setFavorite(e.target.checked)} />
-                <FormGroupControl label="Date" type="date" value={date? dayja(date).format('YYYY-MM-DD'):""} onChange={(e) => setDate(e.target.value)} />
+                <FormGroupControl label="Date" type="date" value={date?dayjs(date).format('YYYY-MM-DD'):""} onChange={(e) => setDate(e.target.value)} />
                 <FormGroupControl label="Rating" type="number" value={rating} onChange={(e) => setRating(parseInt(e.target.value))} min={0} max={5} />
                 <Button variant="primary" type="submit">{mode === 'Add' ? 'Add' : 'Edit'}</Button>{' '}
                 <Button variant="danger" onClick={() => navigate('..')}>Cancel</Button>

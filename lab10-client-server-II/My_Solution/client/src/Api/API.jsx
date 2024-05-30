@@ -24,8 +24,9 @@ async function newFilm(film) {
         },
         body: JSON.stringify(film)
     })
-    .handleInvalidResponse()
-    .then(response => response.json());
+    .then(handleInvalidResponse)
+    .then(response => response.json())
+
     return response;
 }
 
@@ -37,11 +38,45 @@ async function editFilm(film) {
         },
         body: JSON.stringify(film)
     })
-    .handleInvalidResponse()
-    .then(response => response.json());
+    .then(handleInvalidResponse)
+    .then(response => response.json())
+
     return response;
 }
 
+async function deleteFilm(id) {
+    const response = await fetch(`${url}/films/${id}`, {
+        method: 'DELETE'
+    })
+}
+
+async function setFavorite(id, favorite) {
+    const response = await fetch(`${url}/films/${id}/favorite`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({favorite})
+    })
+    .then(handleInvalidResponse)
+    .then(response => response.json())
+
+    return response;
+}
+
+function setRating(id, rating) {
+    const response = fetch(`${url}/films/${id}/rating`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({rating})
+    })
+    .then(handleInvalidResponse)
+    .then(response => response.json())
+
+    return response;
+}
 
 function handleInvalidResponse(response) {
     if (!response.ok) { throw Error(response.statusText) }
@@ -56,5 +91,5 @@ function mapApiFilmsToFilms(apiFilms) {
     return apiFilms.map(film => new Film(film.id, film.title, film.favorite, film.watchDate, film.rating, film.userId));
 }
 
-const API = {loadFilm, newFilm, editFilm};
+const API = {loadFilm, newFilm, editFilm, deleteFilm, setFavorite, setRating};
 export default API;
