@@ -1,0 +1,71 @@
+/* increase default icon size */
+i.bi {
+  font-size: 25px;
+}
+
+/* desktop sidebar */
+#films-filters .nav .nav-link {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#films-filters .nav .nav-item:hover .nav-link {
+  background-color: #055c9d;
+  color: white !important;
+}
+
+/* films list */
+#films-list .list-group-item {
+  padding: 1rem;
+}
+
+/* reduced size for icons in list */
+#films-list i.bi {
+  font-size: 18px;
+}
+
+/* custom style for actions column */
+#films-list .list-group-item .actions-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+#films-list .list-group-item .actions {
+  display: flex;
+  gap: .5rem;
+}
+
+#films-list .list-group-item .actions i {
+  color: #555555;
+}
+
+#films-list i.bi-pencil:hover {
+  color: initial;
+}
+
+#films-list i.bi-trash:hover {
+  color: red;
+}
+
+
+/* custom star style */
+#films-list i.bi {
+  cursor: pointer;
+}
+
+#films-list i.bi.bi-star-fill, #films-list i.bi.bi-star:hover {
+  color: #f0ad4e;
+}
+
+#films-list i.bi.bi-star-fill:hover {
+  color: initial;
+}
+
+
+/* Add film button */
+.fixed-right-bottom {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 1;
+}

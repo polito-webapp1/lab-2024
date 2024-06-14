@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.11",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.1.7"
+  }
+}
